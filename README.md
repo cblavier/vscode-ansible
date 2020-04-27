@@ -17,3 +17,4 @@ code.mydomain.com
 ```
 
 - copy `variables/all.template.yml` to `variables/all.yml` and change variables to your convenience
+- run `ansible-playbook playbook.yml`
