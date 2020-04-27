@@ -1,0 +1,41 @@
+- name: Install Docker system requirements
+  become: true
+  apt:
+    state: latest
+    cache_valid_time: 3600
+    name:
+      [
+        "apt-transport-https",
+        "ca-certificates",
+        "curl",
+        "software-properties-common",
+        "python3-pip",
+        "virtualenv",
+        "python3-setuptools",
+      ]
+
+- name: Add Docker GPG apt Key
+  become: true
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker Repository
+  become: true
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu bionic stable
+    state: present
+
+- name: Update apt and install docker-ce
+  become: true
+  apt: update_cache=yes name=docker-ce state=latest
+
+- name: Install Docker Module for Python
+  pip:
+    name:
+      - docker
+      - docker-compose
+
+- name: Add {{username}} to docker group
+  become: true
+  command: usermod -aG docker {{username}}

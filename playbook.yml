@@ -1,0 +1,15 @@
+---
+- hosts: all
+  vars_files:
+    - variables/all.yml
+
+  tasks:
+    - name: Run user.yml tasks
+      include_tasks: tasks/user.yml
+
+    - name: Run docker.yml tasks
+      include_tasks: tasks/docker.yml
+
+    - name: Run vscode.yml tasks
+      include_tasks: tasks/vscode.yml
+    # Nginx

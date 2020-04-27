@@ -1,0 +1,22 @@
+- name: Create VSCode data directory
+  file:
+    path: "{{vscode_data_path}}"
+    state: directory
+
+- name: Run VSCode with docker-compose
+  docker_compose:
+    project_name: vscode
+    definition:
+      version: "3"
+      services:
+        vscode:
+          image: codercom/code-server
+          command: "/usr/local/bin/code-server --host 0.0.0.0 --port 9090 --user-data-dir=/usr/local/var/code-server"
+          volumes:
+            - "{{vscode_data_path}}:/usr/local/var/code-server"
+          ports:
+            - "9090:8080"
+  register: output
+
+- debug:
+    var: output

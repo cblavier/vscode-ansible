@@ -1,0 +1,4 @@
+username: YOUR_UNIX_USERNAME
+local_ssh_path: ~/.ssh/id_rsa.pub
+vscode_data_path: ~{{username}}/data/vscode
+postgres_data_path: ~{{username}}/data/postgres

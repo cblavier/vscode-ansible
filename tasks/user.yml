@@ -1,0 +1,22 @@
+---
+- name: Create sudo group
+  remote_user: root
+  group: name=sudo state=present
+
+- name: Add {{username}} user and add it to sudo
+  remote_user: root
+  user: name={{username}} state=present createhome=yes
+
+- name: Set up authorized keys for {{username}}
+  remote_user: root
+  authorized_key: user={{username}} key="{{item}}"
+  with_file: "{{local_ssh_path}}"
+
+- name: passwordless sudo commands
+  remote_user: root
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: "^%sudo"
+    line: "{{username}} ALL=(ALL) NOPASSWD:ALL"
+    validate: "visudo -cf %s"
