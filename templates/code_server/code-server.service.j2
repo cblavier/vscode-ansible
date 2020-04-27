@@ -1,0 +1,12 @@
+[Unit]
+Description=code-server
+After=nginx.service
+
+[Service]
+Type=simple
+Environment=PASSWORD={{code_server_password}}
+ExecStart={{code_server_path}}/code-server --host 0.0.0.0 --port {{code_server_local_port}} --user-data-dir {{code_server_data_path}} --auth password
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

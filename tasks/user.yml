@@ -1,19 +1,23 @@
 ---
 - name: Create sudo group
-  remote_user: root
   group: name=sudo state=present
 
 - name: Add {{username}} user and add it to sudo
-  remote_user: root
   user: name={{username}} state=present createhome=yes
 
+- name: Create user bin directory
+  file:
+    path: "~{{username}}/bin"
+    owner: "{{username}}"
+    group: "{{username}}"
+    mode: "700"
+    state: directory
+
 - name: Set up authorized keys for {{username}}
-  remote_user: root
   authorized_key: user={{username}} key="{{item}}"
   with_file: "{{local_ssh_path}}"
 
 - name: passwordless sudo commands
-  remote_user: root
   lineinfile:
     path: /etc/sudoers
     state: present

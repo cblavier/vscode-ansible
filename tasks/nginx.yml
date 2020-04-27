@@ -1,6 +1,12 @@
-- name: Install nginx
-  become: true
-  apt: name=nginx cache_valid_time={{apt_cache_delay}} state=latest
+- name: APT repo for certbot
+  apt_repository:
+    repo: "ppa:certbot/certbot"
+
+- name: Install nginx & certbot
+  apt:
+    state: latest
+    cache_valid_time: "{{apt_cache_delay}}"
+    name: ["nginx", "python-certbot-nginx"]
 
 - name: Start nginx
   service:

@@ -1,17 +1,17 @@
 ---
 - hosts: all
+  remote_user: root
   vars_files:
     - variables/all.yml
 
   tasks:
-    - name: Run user.yml tasks
-      include_tasks: tasks/user.yml
-
-    - name: Run docker.yml tasks
-      include_tasks: tasks/docker.yml
-
-    - name: Run nginx.yml tasks
-      include_tasks: tasks/nginx.yml
-
-    - name: Run vscode.yml tasks
-      include_tasks: tasks/vscode.yml
+    - name: Run {{task_file}} tasks
+      include_tasks: tasks/{{task_file}}
+      loop:
+        - user.yml
+        - shell.yml
+        - nginx.yml
+        - code_server.yml
+        - docker.yml
+      loop_control:
+        loop_var: task_file
