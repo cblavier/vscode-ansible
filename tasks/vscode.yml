@@ -10,13 +10,36 @@
       version: "3"
       services:
         vscode:
+          container_name: vscode
           image: codercom/code-server
-          command: "/usr/local/bin/code-server --host 0.0.0.0 --port 9090 --user-data-dir=/usr/local/var/code-server"
+          command: "/usr/local/bin/code-server --host 0.0.0.0 --port 8080 --user-data-dir=/usr/local/var/code-server --auth password"
           volumes:
             - "{{vscode_data_path}}:/usr/local/var/code-server"
           ports:
-            - "9090:8080"
-  register: output
+            - "{{vscode_local_port}}:8080"
+          environment:
+            - "PASSWORD={{vscode_password}}"
+  register: vscode_docker_output
 
-- debug:
-    var: output
+- name: NGinx reverse proxy for VSCode
+  become: true
+  template:
+    src: templates/nginx/site.conf.j2
+    dest: /etc/nginx/sites-available/vscode.conf
+    mode: "0600"
+  vars:
+    host: "{{vscode_remote_host}}"
+    port: "{{vscode_local_port}}"
+
+- name: NGinx config symlink
+  become: true
+  file:
+    src: /etc/nginx/sites-available/vscode.conf
+    dest: /etc/nginx/sites-enabled/vscode.conf
+    state: link
+
+- name: Restart nginx
+  become: true
+  service:
+    name: nginx
+    state: restarted

@@ -12,9 +12,9 @@ Guidelines to provision a cloud server from a Mac.
   ```
 
 - create an ansible inventory in `~/.ansible/hosts`
-```
-code.mydomain.com
-```
+  ```
+  code.mydomain.com
+  ```
 
 - copy `variables/all.template.yml` to `variables/all.yml` and change variables to your convenience
 - run `ansible-playbook playbook.yml`

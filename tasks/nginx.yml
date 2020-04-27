@@ -1,0 +1,8 @@
+- name: Install nginx
+  become: true
+  apt: name=nginx cache_valid_time={{apt_cache_delay}} state=latest
+
+- name: Start nginx
+  service:
+    name: nginx
+    state: started

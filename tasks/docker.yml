@@ -2,7 +2,7 @@
   become: true
   apt:
     state: latest
-    cache_valid_time: 3600
+    cache_valid_time: "{{apt_cache_delay}}"
     name:
       [
         "apt-transport-https",
@@ -14,7 +14,7 @@
         "python3-setuptools",
       ]
 
-- name: Add Docker GPG apt Key
+- name: Add Docker GPG APT key
   become: true
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
@@ -28,7 +28,7 @@
 
 - name: Update apt and install docker-ce
   become: true
-  apt: update_cache=yes name=docker-ce state=latest
+  apt: cache_valid_time={{apt_cache_delay}} name=docker-ce state=latest
 
 - name: Install Docker Module for Python
   pip:

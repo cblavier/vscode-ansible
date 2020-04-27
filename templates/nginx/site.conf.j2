@@ -1,0 +1,14 @@
+server {
+
+  listen 80;
+  server_name {{host}};
+
+  location / {
+    proxy_pass http://localhost:{{port}}/;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection upgrade;
+    proxy_set_header Accept-Encoding gzip;
+    proxy_set_header Host $host;
+  }
+
+}

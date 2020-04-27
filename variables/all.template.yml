@@ -1,4 +1,11 @@
-username: YOUR_UNIX_USERNAME
+postgreusername: YOUR_UNIX_USERNAME
 local_ssh_path: ~/.ssh/id_rsa.pub
+
+apt_cache_delay: 3600
+
 vscode_data_path: ~{{username}}/data/vscode
+vscode_remote_host: vscode-test.christianblavier.com
+vscode_local_port: 9090
+vscode_password: YOUR_VSCODE_PASSWORD
+
 postgres_data_path: ~{{username}}/data/postgres

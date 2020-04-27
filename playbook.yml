@@ -10,6 +10,8 @@
     - name: Run docker.yml tasks
       include_tasks: tasks/docker.yml
 
+    - name: Run nginx.yml tasks
+      include_tasks: tasks/nginx.yml
+
     - name: Run vscode.yml tasks
       include_tasks: tasks/vscode.yml
-    # Nginx
