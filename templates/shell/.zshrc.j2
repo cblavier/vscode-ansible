@@ -1,12 +1,13 @@
+export LANGUAGE={{locale}}
+export LANG={{locale}}
+export LC_ALL={{locale}}
+export LC_CTYPE={{locale}}
+
 export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME={{zsh_theme}}
 plugins=(git asdf)
 source $ZSH/oh-my-zsh.sh
-
 export PATH=$HOME/bin:/snap/bin:$PATH
-export LANGUAGE={{locale}}
-export LANG={{locale}}
-export LC_ALL={{locale}}
 
 eval "$(direnv hook zsh)"
 source "/usr/share/autojump/autojump.sh"
