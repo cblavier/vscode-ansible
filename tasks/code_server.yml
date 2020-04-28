@@ -40,6 +40,7 @@
 - name: Start Code Server service
   service:
     name: code-server
+    enabled: yes
     state: restarted
 
 - name: Restart nginx
