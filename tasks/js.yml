@@ -1,0 +1,18 @@
+- name: Download nvm install script
+  become: yes
+  become_user: "{{username}}"
+  get_url:
+    url: https://raw.githubusercontent.com/creationix/nvm/v{{nvm_version}}/install.sh
+    dest: /tmp/nvm_{{nvm_version}}_install.sh
+    mode: "0755"
+
+- name: Install nvm
+  become: yes
+  become_user: "{{username}}"
+  command: /tmp/nvm_{{nvm_version}}_install.sh
+
+- name: Install node and set version
+  become: yes
+  become_user: "{{username}}"
+  shell: >
+    /bin/bash -c "source ~/.nvm/nvm.sh && nvm install {{node_version}} && nvm alias default {{node_version}}"

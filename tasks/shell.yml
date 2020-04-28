@@ -1,20 +1,21 @@
 - name: Installing Zsh and git
   apt: pkg=zsh,git,autojump,direnv state=latest
-  become: true
 
 - name: Cloning oh-my-zsh
   git: repo=https://github.com/robbyrussell/oh-my-zsh
     dest=~{{username}}/.oh-my-zsh
   become: yes
-  become_user: "{{ username }}"
+  become_user: "{{username}}"
 
 - name: Creating new ~/.zshrc
-  copy: src=templates/shell/.zshrc
-    dest=~{{username}}/.zshrc
+  template:
+    src: templates/shell/.zshrc.j2
+    dest: ~{{username}}/.zshrc
+    mode: 0600
   become: yes
-  become_user: "{{ username }}"
+  become_user: "{{username}}"
 
 - name: Changing default shell to ZSH
   user:
-    name: "{{ username }}"
+    name: "{{username}}"
     shell: /usr/bin/zsh

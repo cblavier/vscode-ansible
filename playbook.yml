@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: "{{host}}"
   remote_user: root
   vars_files:
     - variables/all.yml
@@ -9,9 +9,13 @@
       include_tasks: tasks/{{task_file}}
       loop:
         - user.yml
-        - shell.yml
         - nginx.yml
         - code_server.yml
         - docker.yml
+        - postgresql.yml
+        - elixir.yml
+        - js.yml
+        - shell.yml
+        - project.yml
       loop_control:
         loop_var: task_file

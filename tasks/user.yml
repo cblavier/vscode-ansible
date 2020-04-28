@@ -10,12 +10,17 @@
     path: "~{{username}}/bin"
     owner: "{{username}}"
     group: "{{username}}"
-    mode: "700"
+    mode: 0700
     state: directory
 
 - name: Set up authorized keys for {{username}}
   authorized_key: user={{username}} key="{{item}}"
-  with_file: "{{local_ssh_path}}"
+  with_file: "{{local_public_ssh_key_path}}"
+
+- name: Upload private key
+  copy: src={{local_private_ssh_key_path}} dest=~{{username}}/.ssh/id_rsa mode=0700
+  become: yes
+  become_user: "{{username}}"
 
 - name: passwordless sudo commands
   lineinfile:
@@ -24,3 +29,7 @@
     regexp: "^%sudo"
     line: "{{username}} ALL=(ALL) NOPASSWD:ALL"
     validate: "visudo -cf %s"
+
+- name: Set timezone to {{timezone}}
+  timezone:
+    name: "{{timezone}}"

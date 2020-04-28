@@ -1,0 +1,33 @@
+- name: Run Postgres with docker-compose
+  docker_compose:
+    project_name: postgresql
+    definition:
+      version: "3"
+      services:
+        postgresql:
+          container_name: "{{postgres_container_name}}"
+          image: postgis/postgis:12-3.0-alpine
+          ports:
+            - "5432:5432"
+          volumes:
+            - "{{postgres_data_path}}:/var/lib/postgresql/data"
+          environment:
+            - POSTGRES_USER={{postgres_user}}
+            - POSTGRES_HOST_AUTH_METHOD={{postgres_host_auth_method}}
+            - POSTGRES_PASSWORD={{postgres_password}}
+          restart: always
+
+- name: Create {{item}} script
+  become: yes
+  become_user: "{{username}}"
+  template:
+    src: templates/postgresql/script.j2
+    dest: ~{{username}}/bin/{{item}}
+    mode: 0700
+  with_items:
+    - dropdb
+    - createdb
+    - psql
+  vars:
+    container_name: "{{postgres_container_name}}"
+    command_name: "{{item}} -U {{postgres_user}}"

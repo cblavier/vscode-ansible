@@ -1,13 +1,34 @@
-username: YOUR_UNIX_USERNAME
-local_ssh_path: ~/.ssh/id_rsa.pub
+host: ssh.mydomain.com
+username: coder
+local_private_ssh_key_path: ~/.ssh/id_rsa
+local_public_ssh_key_path: ~/.ssh/id_rsa.pub
+timezone: Europe/Paris
+zsh_theme: robbyrussell
 
 apt_cache_delay: 3600
 
 code_server_version: 3.1.1
 code_server_data_path: /home/{{username}}/data/code_server
-code_server_remote_host: YOUR_CODE_SERVER_REMOTE_URL
+code_server_remote_host: vscode.mydomain.com
 code_server_local_port: 9090
-code_server_password: YOUR_CODE_SERVER_PASSWORD
+code_server_password: password
 letsencrypt_email: YOUR_EMAIL
 
+postgres_user: postgres
+postgres_password: postgres
+postgres_host_auth_method: trust
 postgres_data_path: /home/{{username}}/data/postgres
+postgres_container_name: postgresql
+
+erlang_version: 22.3
+elixir_version: 1.10.2-otp-22
+nvm_version: 0.35.3
+node_version: 12.12
+
+code_directory: /home/{{username}}/code
+project_name: your_project_name
+project_git_url: git@github.com:company/project.git
+webpack_remote_host: webpack.mydomain.com
+webpack_local_port: 8080
+project_remote_host: myproject.mydomain.com
+project_local_port: 5000

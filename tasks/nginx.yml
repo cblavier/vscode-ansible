@@ -11,4 +11,4 @@
 - name: Start nginx
   service:
     name: nginx
-    state: started
+    state: restarted

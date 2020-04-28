@@ -1,0 +1,55 @@
+- name: Create code directory
+  file:
+    path: "{{code_directory}}"
+    mode: "700"
+    state: directory
+  become: yes
+  become_user: "{{username}}"
+
+- name: Install project requirements
+  apt:
+    state: latest
+    cache_valid_time: "{{apt_cache_delay}}"
+    name: ["ffmpeg", "imagemagick"]
+
+- name: Clone project code
+  become: yes
+  become_user: "{{username}}"
+  git:
+    repo: "{{project_git_url}}"
+    dest: "{{code_directory}}/{{project_name}}"
+
+- name: NGinx reverse proxy for webpack
+  template:
+    src: templates/nginx/site.conf.j2
+    dest: /etc/nginx/sites-available/webpack.conf
+    mode: 0600
+  vars:
+    host: "{{webpack_remote_host}}"
+    port: "{{webpack_local_port}}"
+
+- name: NGinx webpack weconfig symlink
+  file:
+    src: /etc/nginx/sites-available/webpack.conf
+    dest: /etc/nginx/sites-enabled/webpack.conf
+    state: link
+
+- name: NGinx reverse proxy for project
+  template:
+    src: templates/nginx/site.conf.j2
+    dest: /etc/nginx/sites-available/{{project_name}}.conf
+    mode: 0600
+  vars:
+    host: "{{project_remote_host}}"
+    port: "{{project_local_port}}"
+
+- name: NGinx apps weconfig symlink
+  file:
+    src: /etc/nginx/sites-available/apps.conf
+    dest: /etc/nginx/sites-enabled/apps.conf
+    state: link
+
+- name: Restart nginx
+  service:
+    name: nginx
+    state: restarted

@@ -4,7 +4,7 @@
     mode: "700"
     state: directory
   become: yes
-  become_user: "{{ username }}"
+  become_user: "{{username}}"
 
 - name: Download & unpack code-server
   unarchive:
@@ -13,7 +13,7 @@
     remote_src: yes
     creates: ~{{username}}/bin/code-server-{{ code_server_version }}-linux-x86_64
   become: yes
-  become_user: "{{ username }}"
+  become_user: "{{username}}"
 
 - name: Code Server symlink
   file:
@@ -21,59 +21,51 @@
     dest: ~{{username}}/bin/code-server
     state: link
   become: yes
-  become_user: "{{ username }}"
+  become_user: "{{username}}"
 
 - name: Code Server service
-  become: true
   template:
     src: templates/code_server/code-server.service.j2
     dest: /lib/systemd/system/code-server.service
-    mode: "0644"
+    mode: 0644
   vars:
     code_server_path: "/home/{{username}}/bin/code-server"
     host: "{{code_server_remote_host}}"
     port: "{{code_server_local_port}}"
 
 - name: Reload systemd
-  become: true
   systemd:
     daemon_reload: yes
 
 - name: Start Code Server service
-  become: true
   service:
     name: code-server
     state: restarted
 
 - name: Restart nginx
-  become: true
   service:
     name: nginx
     state: restarted
 
 - name: NGinx reverse proxy for Code Server
-  become: true
   template:
     src: templates/nginx/site.conf.j2
     dest: /etc/nginx/sites-available/code-server.conf
-    mode: "0600"
+    mode: 0600
   vars:
     host: "{{code_server_remote_host}}"
     port: "{{code_server_local_port}}"
 
 - name: NGinx config symlink
-  become: true
   file:
     src: /etc/nginx/sites-available/code-server.conf
     dest: /etc/nginx/sites-enabled/code-server.conf
     state: link
 
 - name: Create letsencrypt certificate
-  become: true
   shell: certbot --nginx -n -m {{ letsencrypt_email }} --agree-tos -d {{ code_server_remote_host }} --redirect
 
 - name: Restart nginx
-  become: true
   service:
     name: nginx
     state: restarted
