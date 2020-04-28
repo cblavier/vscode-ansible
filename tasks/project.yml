@@ -18,6 +18,8 @@
   git:
     repo: "{{project_git_url}}"
     dest: "{{code_directory}}/{{project_name}}"
+    key_file: ~{{username}}/.ssh/id_rsa
+    accept_hostkey: yes
     recursive: yes
 
 - name: NGinx reverse proxy for webpack
@@ -59,5 +61,3 @@
   snap:
     name: heroku
     classic: yes
-  become: yes
-  become_user: "{{username}}"

@@ -13,6 +13,7 @@ This project will help at setting up a ubuntu VPS with :
 - docker
 - code-server
 - elixir (with asdf)
+- chromedriver
 - node (with nvm)
 - postgresql
 - nginx as a reverse proxy in front of code-server, webpack and your project

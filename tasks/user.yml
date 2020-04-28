@@ -37,7 +37,15 @@
 - name: Change inotify.max_user_watches
   sysctl:
     name: fs.inotify.max_user_watches
-    value: 524288
+    value: "524288"
     sysctl_set: yes
     state: present
     reload: yes
+
+- name: Copy git config
+  template:
+    src: templates/user/gitconfig.j2
+    dest: ~{{username}}/.gitconfig
+    mode: 0600
+  become: yes
+  become_user: "{{username}}"

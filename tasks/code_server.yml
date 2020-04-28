@@ -8,16 +8,16 @@
 
 - name: Download & unpack code-server
   unarchive:
-    src: https://github.com/cdr/code-server/releases/download/{{ code_server_version }}/code-server-{{ code_server_version }}-linux-x86_64.tar.gz
+    src: https://github.com/cdr/code-server/releases/download/{{code_server_version}}/code-server-{{code_server_version}}-linux-x86_64.tar.gz
     dest: ~{{username}}/bin
     remote_src: yes
-    creates: ~{{username}}/bin/code-server-{{ code_server_version }}-linux-x86_64
+    creates: ~{{username}}/bin/code-server-{{code_server_version}}-linux-x86_64
   become: yes
   become_user: "{{username}}"
 
 - name: Code Server symlink
   file:
-    src: ~{{username}}/bin/code-server-{{ code_server_version }}-linux-x86_64
+    src: ~{{username}}/bin/code-server-{{code_server_version}}-linux-x86_64
     dest: ~{{username}}/bin/code-server
     state: link
   become: yes

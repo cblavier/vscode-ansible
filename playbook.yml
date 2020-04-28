@@ -16,6 +16,7 @@
         - elixir.yml
         - js.yml
         - shell.yml
+        - chromedriver.yml
         - project.yml
       loop_control:
         loop_var: task_file

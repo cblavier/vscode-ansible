@@ -17,17 +17,17 @@
             - POSTGRES_PASSWORD={{postgres_password}}
           restart: always
 
-- name: Create {{item}} script
-  become: yes
-  become_user: "{{username}}"
-  template:
-    src: templates/postgresql/script.j2
-    dest: ~{{username}}/bin/{{item}}
-    mode: 0700
-  with_items:
-    - dropdb
-    - createdb
-    - psql
-  vars:
-    container_name: "{{postgres_container_name}}"
-    command_name: "{{item}} -U {{postgres_user}}"
+- name: Add Postgres apt Key
+  apt_key:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    state: present
+
+- name: APT repo for postgres
+  apt_repository:
+    repo: deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main
+
+- name: Install postgresql-client
+  apt:
+    state: latest
+    cache_valid_time: "{{apt_cache_delay}}"
+    name: "postgresql-client-12"

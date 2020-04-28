@@ -3,7 +3,7 @@ ZSH_THEME={{zsh_theme}}
 plugins=(git asdf)
 source $ZSH/oh-my-zsh.sh
 
-export PATH=$HOME/bin:$PATH
+export PATH=$HOME/bin:/snap/bin:$PATH
 export LANGUAGE={{locale}}
 export LANG={{locale}}
 export LC_ALL={{locale}}
@@ -13,3 +13,7 @@ source "/usr/share/autojump/autojump.sh"
 
 export NVM_DIR=~/.nvm
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+alias dropdb="dropdb -h localhost -U {{postgres_user}}"
+alias createdb="createdb -h localhost -U {{postgres_user}}"
+alias psql="psql -h localhost -U {{postgres_user}}"

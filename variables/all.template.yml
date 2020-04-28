@@ -1,8 +1,10 @@
 host: ssh.mydomain.com
 username: coder
+user_email: YOUR_EMAIL
+user_name: YOUR FULL NAME
 local_private_ssh_key_path: ~/.ssh/id_rsa
 local_public_ssh_key_path: ~/.ssh/id_rsa.pub
-locale: fr_FR.UTF-8
+locale: en_US.UTF-8
 timezone: Europe/Paris
 zsh_theme: robbyrussell
 
@@ -13,7 +15,7 @@ code_server_data_path: /home/{{username}}/data/code_server
 code_server_remote_host: vscode.mydomain.com
 code_server_local_port: 9090
 code_server_password: password
-letsencrypt_email: YOUR_EMAIL
+letsencrypt_email: "{{user_email}}"
 
 postgres_user: postgres
 postgres_password: postgres
@@ -25,6 +27,8 @@ erlang_version: 22.3
 elixir_version: 1.10.2-otp-22
 nvm_version: 0.35.3
 node_version: 12.12
+
+chromedriver_version: "81.0.4044.69"
 
 code_directory: /home/{{username}}/code
 project_name: your_project_name
