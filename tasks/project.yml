@@ -18,6 +18,7 @@
   git:
     repo: "{{project_git_url}}"
     dest: "{{code_directory}}/{{project_name}}"
+    recursive: yes
 
 - name: NGinx reverse proxy for webpack
   template:
@@ -45,11 +46,18 @@
 
 - name: NGinx apps weconfig symlink
   file:
-    src: /etc/nginx/sites-available/apps.conf
-    dest: /etc/nginx/sites-enabled/apps.conf
+    src: /etc/nginx/sites-available/{{project_name}}.conf
+    dest: /etc/nginx/sites-enabled/{{project_name}}.conf
     state: link
 
 - name: Restart nginx
   service:
     name: nginx
     state: restarted
+
+- name: Install Heroku CLI
+  snap:
+    name: heroku
+    classic: yes
+  become: yes
+  become_user: "{{username}}"

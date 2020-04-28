@@ -2,6 +2,7 @@ host: ssh.mydomain.com
 username: coder
 local_private_ssh_key_path: ~/.ssh/id_rsa
 local_public_ssh_key_path: ~/.ssh/id_rsa.pub
+locale: fr_FR.UTF-8
 timezone: Europe/Paris
 zsh_theme: robbyrussell
 

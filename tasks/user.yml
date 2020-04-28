@@ -33,3 +33,11 @@
 - name: Set timezone to {{timezone}}
   timezone:
     name: "{{timezone}}"
+
+- name: Change inotify.max_user_watches
+  sysctl:
+    name: fs.inotify.max_user_watches
+    value: 524288
+    sysctl_set: yes
+    state: present
+    reload: yes

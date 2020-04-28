@@ -4,7 +4,9 @@ plugins=(git asdf)
 source $ZSH/oh-my-zsh.sh
 
 export PATH=$HOME/bin:$PATH
-export LC_CTYPE="en_US.UTF-8"
+export LANGUAGE={{locale}}
+export LANG={{locale}}
+export LC_ALL={{locale}}
 
 eval "$(direnv hook zsh)"
 source "/usr/share/autojump/autojump.sh"
