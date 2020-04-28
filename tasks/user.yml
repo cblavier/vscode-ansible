@@ -18,7 +18,7 @@
   with_file: "{{local_public_ssh_key_path}}"
 
 - name: Upload private key
-  copy: src={{local_private_ssh_key_path}} dest=~{{username}}/.ssh/id_rsa mode=0700
+  copy: src={{local_private_ssh_key_path}} dest=~{{username}}/.ssh/id_rsa mode=0600
   become: yes
   become_user: "{{username}}"
 

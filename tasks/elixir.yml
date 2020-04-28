@@ -53,3 +53,8 @@
   command: ~{{username}}/.asdf/bin/asdf install elixir {{elixir_version}} && ~{{username}}/.asdf/bin/asdf global elixir {{elixir_version}}
   args:
     creates: ~{{username}}/.asdf/installs/elixir/{{elixir_version}}
+
+- name: asdf reshim
+  become: yes
+  become_user: "{{username}}"
+  command: ~{{username}}/.asdf/bin/asdf reshim
