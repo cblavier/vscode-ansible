@@ -1,16 +1,16 @@
 # Motivations
 
-Since I frequently switch between different devices while coding (macbookpro / imac / ipad), I wanted a seamless way to switch between devices when coding a single project.
+I wanted a seamless way to switch between devices while coding (macbookpro / imac / ipad).
 
-- VSCode offers a remote SSH feature which allows your local VScode editor to remotely edit code, run terminals ... which is perfect
+- [VSCode offers a remote SSH](https://code.visualstudio.com/docs/remote/ssh) feature which allows your local VScode editor to remotely edit code, run terminals ... which is perfect
 for computers.
 
-- [coder.com](coder.com) also offers a feature to make a full featured VSCode environment run in your browser (which can be helpful from an iPad)
+- [coder.com](coder.com) also offers a feature to make a full featured VSCode environment run in your browser or as a PWA (which can be helpful from an iPad)
 
 # Components
 
 This project will help at setting up a ubuntu VPS with :
-- docker
+- Docker
 - code-server
 - elixir (with asdf)
 - chromedriver
