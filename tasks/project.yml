@@ -10,7 +10,7 @@
   apt:
     state: latest
     cache_valid_time: "{{apt_cache_delay}}"
-    name: ["ffmpeg", "imagemagick"]
+    name: ["ffmpeg", "imagemagick", "inotify-tools"]
 
 - name: Clone project code
   become: yes

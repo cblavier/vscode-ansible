@@ -17,7 +17,7 @@ This project will help at setting up a ubuntu VPS with :
 - node (with nvm)
 - postgresql
 - nginx as a reverse proxy in front of code-server, webpack and your project
-- various shell things such as ohmyzsh, autojump or direnv
+- various shell things such as ohmyzsh, autojump, tmux or direnv
 
 # Setup
 
@@ -33,26 +33,19 @@ Guidelines to provision a development server with Ansible
   - `webpack.mydomain.com` to reach webpack dev server, that will hot render assets
   - `myproject.mydomain.com` to reach your dev server
 
-- locally install ansible: `brew install ansible`
+- locally install ansible: `brew install ansible`.
 
-- create an ansible config file in `~/.ansible.cfg`
+- create an ansible config file in `~/.ansible.cfg`.
   ```
   [defaults]
   inventory = ~/.ansible/hosts
   ```
 
-- create an ansible inventory in `~/.ansible/hosts`	- create an ansible inventory in `~/.ansible/hosts`
+- create an ansible inventory in `~/.ansible/hosts`	- create an ansible inventory in `~/.ansible/hosts`.
   ```
   ssh.mydomain.com
   ```
 
-- copy `variables/all.template.yml` to `variables/all.yml` and change variables to your convenience. Espcially:
-  - host, code_server_remote_host, webpack_remote_host and project_remote_host
-  - username
-  - timezone
-  - code_server_password
-  - letsencrypt_email
-  - project_name
-  - project_git_url
+- copy `variables/all.template.yml` to `variables/all.yml` and change variables to your convenience.
 
-- run `ansible-playbook playbook.yml`
+- run `ansible-playbook playbook.yml`.
