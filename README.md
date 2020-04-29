@@ -5,7 +5,7 @@ I wanted a seamless way to switch between devices while coding (macbookpro / ima
 - [VSCode offers a remote SSH](https://code.visualstudio.com/docs/remote/ssh) feature which allows your local VScode editor to remotely edit code, run terminals ... which is perfect
 for computers.
 
-- [coder.com](coder.com) also offers a feature to make a full featured VSCode environment run in your browser or as a PWA (which can be helpful from an iPad)
+- [coder.com](http://coder.com) also offers a feature to make a full featured VSCode environment run in your browser or as a PWA (which can be helpful from an iPad)
 
 # Components
 
