@@ -4,24 +4,27 @@
     name: asdf
 
 - name: Install asdf Erlang plugin
-  command: "asdf plugin add erlang"
+  shell: asdf plugin add erlang
   args:
     creates: ~{{username}}/.asdf/plugins/erlang
 
 - name: Install asdf Elixir plugin
-  command: "asdf plugin add elixir"
+  shell: asdf plugin add elixir
   args:
     creates: ~{{username}}/.asdf/plugins/elixir
 
 - name: Install Erlang {{erlang_version}}
-  command: "asdf install erlang {{erlang_version}} && asdf global erlang {{erlang_version}}"
+  shell: asdf install erlang {{erlang_version}} && asdf global erlang {{erlang_version}}
   args:
     creates: ~{{username}}/.asdf/installs/erlang/{{erlang_version}}
+  register: erlang_install_result
 
 - name: Install Elixir {{elixir_version}}
-  command: "asdf install elixir {{elixir_version}} && asdf global elixir {{elixir_version}}"
+  shell: asdf install elixir {{elixir_version}} && asdf global elixir {{elixir_version}}
   args:
     creates: ~{{username}}/.asdf/installs/elixir/{{elixir_version}}
+  register: elixir_install_result
 
 - name: asdf reshim
-  command: "asdf reshim"
+  shell: asdf reshim
+  when: erlang_install_result.changed or elixir_install_result.changed

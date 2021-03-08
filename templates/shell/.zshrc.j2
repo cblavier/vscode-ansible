@@ -3,7 +3,7 @@ ZSH_THEME={{zsh_theme}}
 plugins=(git asdf)
 source $ZSH/oh-my-zsh.sh
 
-export PATH=$HOME/.local/bin:$PATH
+export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="{{brew_path}}/bin:$PATH"
 export EDITOR=vim
 export ERL_AFLAGS="-kernel shell_history enabled"
@@ -13,6 +13,8 @@ eval "$(direnv hook zsh)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s $(brew --prefix)/opt/nvm/nvm.sh ] && . $(brew --prefix)/opt/nvm/nvm.sh
+
+eval "$(rbenv init - zsh)"
 
 alias dropdb="dropdb -h localhost -U {{postgres_user}}"
 alias createdb="createdb -h localhost -U {{postgres_user}}"

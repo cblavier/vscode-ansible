@@ -18,12 +18,13 @@
     - name: Run {{task_file}} tasks
       include_tasks: tasks/{{task_file}}
       loop:
-        # - homebrew.yml
-        # - shell.yml
-        # - nginx.yml
-        # - postgresql.yml
-        # - elixir.yml
+        - homebrew.yml
+        - shell.yml
+        - nginx.yml
+        - postgresql.yml
+        - elixir.yml
         - js.yml
+        - ruby.yml
         - code.yml
         # - code_server.yml
       loop_control:

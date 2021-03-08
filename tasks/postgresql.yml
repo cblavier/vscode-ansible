@@ -1,7 +1,7 @@
 - name: Install PostgresQL
   homebrew:
-    state: latest
-    name: ["postgresql"]
+    state: present
+    name: postgresql
 
 - name: Copy postgresql launchctl script
   become: yes

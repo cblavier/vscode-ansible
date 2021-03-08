@@ -1,11 +1,10 @@
 - name: Install NVM
   homebrew:
     state: latest
-    name: ["nvm"]
+    name: nvm
 
 - name: Install Node {{node_version}}
   shell: >
     . {{brew_path}}/opt/nvm/nvm.sh && nvm install {{node_version}} && nvm alias default {{node_version}}
   args:
-    executable: /bin/bash
-    creates: "~{{username}}/.nvm/versions/{{node_version}}"
+    creates: ~{{username}}/.nvm/versions/node/v{{node_version}}*

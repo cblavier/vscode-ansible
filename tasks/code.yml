@@ -3,10 +3,13 @@
     path: "{{code_directory}}"
     mode: "700"
     state: directory
-  become: yes
-  become_user: "{{username}}"
 
-- name: Install dev requirements
+- name: Install ffmpeg & imagemagick
   homebrew:
     state: latest
-    name: ["ffmpeg", "imagemagick", "heroku", "chromedriver"]
+    name: ["ffmpeg", "imagemagick"]
+
+- name: Install chromedriver
+  homebrew_cask:
+    state: latest
+    name: chromedriver

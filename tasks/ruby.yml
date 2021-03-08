@@ -1,0 +1,15 @@
+- name: Install rbenv
+  homebrew:
+    state: latest
+    name: rbenv
+
+- name: Install Ruby {{ruby_version}}
+  shell: >
+    rbenv install {{ruby_version}} && rbenv global {{ruby_version}}
+  args:
+    creates: ~{{username}}/.rbenv/versions/{{ruby_version}}
+  register: ruby_install_result
+
+- name: rbenv rehash
+  command: rbenv rehash
+  when: ruby_install_result.changed

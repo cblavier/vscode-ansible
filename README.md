@@ -1,37 +1,33 @@
 # Motivations
 
-I wanted a seamless way to switch between devices while coding (macbookpro / imac / ipad).
+I want a seamless way to switch between devices while coding (macbookpro / imac / ipad). 
 
 - [VSCode offers a remote SSH](https://code.visualstudio.com/docs/remote/ssh) feature which allows your local VScode editor to remotely edit code, run terminals ... which is perfect
 for computers.
 
-- [coder.com](http://coder.com) also offers a feature to make a full featured VSCode environment run in your browser or as a PWA (which can be helpful from an iPad)
+- [code-server](https://github.com/cdr/code-server) also offers a feature to make a full featured VSCode environment run in your browser or as a PWA (which can be helpful from an iPad)
+
+It is now feasible with the power of new Silicon M1 CPU 🔥
 
 # Components
 
-This project will help at setting up a ubuntu VPS with :
-- Docker
+This project will help at setting up a Mac M1 (arm64) VPS with :
 - code-server
 - elixir (with asdf)
-- chromedriver
 - node (with nvm)
+- ruby (with rbenv)
+- chromedriver
 - postgresql
-- nginx as a reverse proxy in front of code-server, webpack and your project
+- nginx as a reverse proxy in front of code-server
 - various shell things such as ohmyzsh, autojump, tmux or direnv
 
 # Setup
 
 Guidelines to provision a development server with Ansible
 
-- first, provision a VPS from any cloud vendor (I use a Digital Ocean $40/mo VPS with Ubuntu 18.04)
+- first, provision a Silicon M1 VPS from any cloud vendor (I use a MacMini M1 from scaleway)
 
-- make sure you can root ssh to your newly created VPS
-
-- register following domain names all set with `A record` to your VPS IP
-  - `ssh.mydomain.com` used by you or ansible to ssh to your VPS
-  - `vscode.mydomain.com` to access code-server web interface
-  - `webpack.mydomain.com` to reach webpack dev server, that will hot render assets
-  - `myproject.mydomain.com` to reach your dev server
+- make sure you can ssh to your newly created VPS
 
 - locally install ansible: `brew install ansible`.
 

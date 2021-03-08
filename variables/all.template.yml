@@ -27,8 +27,9 @@ postgres_container_name: postgresql
 erlang_version: 23.2
 elixir_version: 1.11.3-otp-23
 node_version: 15
+ruby_version: 2.7.2
 
-code_directory: /home/{{username}}/code
+code_directory: ~{{username}}/code
 project_name: your_project_name
 project_git_url: git@github.com:company/project.git
 webpack_remote_host: webpack.mydomain.com

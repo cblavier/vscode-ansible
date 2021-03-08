@@ -1,7 +1,7 @@
-- name: Installing zsh, git, autojump, fzf, direnv & tmux
+- name: Installing zsh, git, neovim, autojump, fzf, direnv & tmux
   homebrew:
     state: latest
-    name: ["zsh", "git", "autojump", "fzf", "direnv", "tmux"]
+    name: ["zsh", "git", "neovim", "autojump", "fzf", "direnv", "tmux"]
 
 - name: Cloning oh-my-zsh
   git:
