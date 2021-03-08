@@ -16,6 +16,14 @@
     mode: 0700
     state: directory
 
+- name: Chown user Library
+  become: yes
+  file:
+    path: "~{{username}}/Library"
+    recurse: yes
+    owner: "{{username}}"
+    state: directory
+
 - name: Set up authorized keys for {{username}}
   become: yes
   authorized_key: user={{username}} key="{{item}}"

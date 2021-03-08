@@ -7,7 +7,7 @@
   become: yes
   template:
     src: templates/launchctl/homebrew.mxcl.postgresql.plist.j2
-    dest: /Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+    dest: "{{launchagents_path}}/{{launchagents_service_prefix}}.postgresql.plist"
     mode: "644"
 
 - name: chmod postgres data dir
@@ -22,5 +22,5 @@
 - name: Load postgres service
   become: yes
   community.general.launchd:
-    name: homebrew.mxcl.postgresql
+    name: "{{launchagents_service_prefix}}.postgresql"
     state: started

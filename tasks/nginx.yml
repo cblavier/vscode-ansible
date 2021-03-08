@@ -7,10 +7,11 @@
   become: yes
   template:
     src: templates/launchctl/homebrew.mxcl.nginx.plist.j2
-    dest: /Library/LaunchAgents/homebrew.mxcl.nginx.plist
+    dest: "{{launchagents_path}}/{{launchagents_service_prefix}}.nginx.plist"
+    mode: "644"
 
 - name: Load nginx service
   become: yes
   community.general.launchd:
-    name: homebrew.mxcl.nginx
+    name: "{{launchagents_service_prefix}}.nginx"
     state: started

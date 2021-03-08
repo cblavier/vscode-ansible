@@ -30,11 +30,12 @@
     mode: 0600
 
 - name: Changing default shell to ZSH
+  become: yes
   user:
     name: "{{username}}"
     shell: /bin/zsh
 
 - name: Fzf setup
-  command: yes | {{brew_path}}/opt/fzf/install
+  shell: yes | {{brew_path}}/opt/fzf/install
   args:
     creates: ~{{username}}/.fzf.zsh

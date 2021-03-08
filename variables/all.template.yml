@@ -11,6 +11,8 @@ timezone: Europe/Paris
 zsh_theme: robbyrussell
 
 brew_path: /opt/homebrew
+launchagents_path: /Library/LaunchAgents
+launchagents_service_prefix: codeserver
 
 code_server_data_path: /home/{{username}}/data/code_server
 code_server_remote_host: vscode.mydomain.com
