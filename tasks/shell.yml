@@ -1,21 +1,40 @@
-- name: Installing Zsh and git
-  apt: pkg=zsh,git,autojump,direnv,tmux state=latest
+- name: Installing zsh, git, autojump, fzf, direnv & tmux
+  homebrew:
+    state: latest
+    name: ["zsh", "git", "autojump", "fzf", "direnv", "tmux"]
 
 - name: Cloning oh-my-zsh
-  git: repo=https://github.com/robbyrussell/oh-my-zsh
-    dest=~{{username}}/.oh-my-zsh
-  become: yes
-  become_user: "{{username}}"
+  git:
+    repo: https://github.com/robbyrussell/oh-my-zsh
+    dest: "~{{username}}/.oh-my-zsh"
 
-- name: Creating new ~/.zshrc
+- name: Copy git config
+  template:
+    src: templates/user/gitconfig.j2
+    dest: ~{{username}}/.gitconfig
+    owner: "{{username}}"
+    mode: 0600
+
+- name: Copying ~/.zshrc
   template:
     src: templates/shell/.zshrc.j2
     dest: ~{{username}}/.zshrc
+    owner: "{{username}}"
     mode: 0600
-  become: yes
-  become_user: "{{username}}"
+
+- name: Copying ~/.tmux.conf
+  template:
+    src: templates/shell/.tmux.conf.j2
+    dest: ~{{username}}/.tmux.conf
+    owner: "{{username}}"
+    mode: 0600
 
 - name: Changing default shell to ZSH
   user:
     name: "{{username}}"
-    shell: /usr/bin/zsh
+    shell: /bin/zsh
+
+- name: Fzf setup
+  command: yes | {{brew_path}}/opt/fzf/install
+  args:
+    creates: ~{{username}}/.fzf.zsh

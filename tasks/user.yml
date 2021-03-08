@@ -1,51 +1,56 @@
 ---
-- name: Create sudo group
-  group: name=sudo state=present
-
 - name: Add {{username}} user and add it to sudo
-  user: name={{username}} state=present createhome=yes
+  become: yes
+  user:
+    name: "{{username}}"
+    state: present
+    group: staff
+    groups: ["staff", "admin"]
+    create_home: yes
 
 - name: Create user bin directory
+  become: yes
   file:
     path: "~{{username}}/bin"
     owner: "{{username}}"
-    group: "{{username}}"
     mode: 0700
     state: directory
 
 - name: Set up authorized keys for {{username}}
+  become: yes
   authorized_key: user={{username}} key="{{item}}"
   with_file: "{{local_public_ssh_key_path}}"
 
 - name: Upload private key
-  copy: src={{local_private_ssh_key_path}} dest=~{{username}}/.ssh/id_rsa mode=0600
   become: yes
-  become_user: "{{username}}"
+  copy:
+    src: "{{local_private_ssh_key_path}}"
+    dest: "~{{username}}/.ssh/id_rsa"
+    owner: "{{username}}"
+    mode: 0600
 
 - name: passwordless sudo commands
-  lineinfile:
-    path: /etc/sudoers
-    state: present
-    regexp: "^%sudo"
-    line: "{{username}} ALL=(ALL) NOPASSWD:ALL"
+  become: yes
+  template:
+    src: templates/user/sudoers.j2
+    dest: /etc/sudoers.d/{{username}}
     validate: "visudo -cf %s"
+    mode: 0440
 
 - name: Set timezone to {{timezone}}
+  become: yes
   timezone:
     name: "{{timezone}}"
 
-- name: Change inotify.max_user_watches
+- name: Set a hostname
+  become: yes
+  command: scutil --set HostName {{hostname}}
+
+- name: Change kern.maxfiles
+  become: yes
   sysctl:
-    name: fs.inotify.max_user_watches
+    name: kern.maxfiles
     value: "524288"
     sysctl_set: yes
     state: present
-    reload: yes
-
-- name: Copy git config
-  template:
-    src: templates/user/gitconfig.j2
-    dest: ~{{username}}/.gitconfig
-    mode: 0600
-  become: yes
-  become_user: "{{username}}"
+    reload: no

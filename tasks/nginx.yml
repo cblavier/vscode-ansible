@@ -1,14 +1,16 @@
-- name: APT repo for certbot
-  apt_repository:
-    repo: "ppa:certbot/certbot"
-
 - name: Install nginx & certbot
-  apt:
+  homebrew:
     state: latest
-    cache_valid_time: "{{apt_cache_delay}}"
-    name: ["nginx", "python-certbot-nginx"]
+    name: ["nginx", "certbot"]
 
-- name: Start nginx
-  service:
-    name: nginx
-    state: restarted
+- name: Copy nginx launchctl script
+  become: yes
+  template:
+    src: templates/launchctl/homebrew.mxcl.nginx.plist.j2
+    dest: /Library/LaunchAgents/homebrew.mxcl.nginx.plist
+
+- name: Load nginx service
+  become: yes
+  community.general.launchd:
+    name: homebrew.mxcl.nginx
+    state: started

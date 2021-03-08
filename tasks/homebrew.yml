@@ -1,0 +1,9 @@
+- name: Install homebrew
+  shell: >
+    yes | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  args:
+    creates: "{{brew_path}}/bin/brew"
+
+- name: brew update
+  homebrew:
+    update_homebrew: yes

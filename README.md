@@ -35,6 +35,8 @@ Guidelines to provision a development server with Ansible
 
 - locally install ansible: `brew install ansible`.
 
+- install homebrew package plugin for ansible : `ansible-galaxy collection install community.general`
+
 - create an ansible config file in `~/.ansible.cfg`.
   ```
   [defaults]
@@ -47,5 +49,7 @@ Guidelines to provision a development server with Ansible
   ```
 
 - copy `variables/all.template.yml` to `variables/all.yml` and change variables to your convenience.
+
+- copy `variables/become_pass.template.yml` to `variables/become_pass.yml` and set your privileged user password in it.
 
 - run `ansible-playbook playbook.yml`.

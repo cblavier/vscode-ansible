@@ -1,16 +1,17 @@
-host: ssh.mydomain.com
-username: coder
-user_email: YOUR_EMAIL
-user_name: YOUR FULL NAME
+host: your_vps_ip
+default_remote_username: privileged user created on your VPS
+username: username
+user_email: user_email
+user_name: user_name
+hostname: your_hostname
 local_private_ssh_key_path: ~/.ssh/id_rsa
 local_public_ssh_key_path: ~/.ssh/id_rsa.pub
 locale: en_US.UTF-8
 timezone: Europe/Paris
 zsh_theme: robbyrussell
 
-apt_cache_delay: 3600
+brew_path: /opt/homebrew
 
-code_server_version: 3.1.1
 code_server_data_path: /home/{{username}}/data/code_server
 code_server_remote_host: vscode.mydomain.com
 code_server_local_port: 9090
@@ -23,12 +24,9 @@ postgres_host_auth_method: trust
 postgres_data_path: /home/{{username}}/data/postgres
 postgres_container_name: postgresql
 
-erlang_version: 22.3
-elixir_version: 1.10.2-otp-22
-nvm_version: 0.35.3
-node_version: 12.12
-
-chromedriver_version: "81.0.4044.69"
+erlang_version: 23.2
+elixir_version: 1.11.3-otp-23
+node_version: 15
 
 code_directory: /home/{{username}}/code
 project_name: your_project_name

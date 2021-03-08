@@ -1,52 +1,7 @@
-- name: Create code_server data directory
-  file:
-    path: "{{code_server_data_path}}"
-    mode: "700"
-    state: directory
-  become: yes
-  become_user: "{{username}}"
-
-- name: Download & unpack code-server
-  unarchive:
-    src: https://github.com/cdr/code-server/releases/download/{{code_server_version}}/code-server-{{code_server_version}}-linux-x86_64.tar.gz
-    dest: ~{{username}}/bin
-    remote_src: yes
-    creates: ~{{username}}/bin/code-server-{{code_server_version}}-linux-x86_64
-  become: yes
-  become_user: "{{username}}"
-
-- name: Code Server symlink
-  file:
-    src: ~{{username}}/bin/code-server-{{code_server_version}}-linux-x86_64
-    dest: ~{{username}}/bin/code-server
-    state: link
-  become: yes
-  become_user: "{{username}}"
-
-- name: Code Server service
-  template:
-    src: templates/code_server/code-server.service.j2
-    dest: /lib/systemd/system/code-server.service
-    mode: 0644
-  vars:
-    code_server_path: "/home/{{username}}/bin/code-server"
-    host: "{{code_server_remote_host}}"
-    port: "{{code_server_local_port}}"
-
-- name: Reload systemd
-  systemd:
-    daemon_reload: yes
-
-- name: Start Code Server service
-  service:
-    name: code-server
-    enabled: yes
-    state: restarted
-
-- name: Restart nginx
-  service:
-    name: nginx
-    state: restarted
+- name: Install codeserver
+  homebrew:
+    state: latest
+    name: codeserver
 
 - name: NGinx reverse proxy for Code Server
   template:

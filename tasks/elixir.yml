@@ -1,60 +1,27 @@
-- name: Install asdf dependencies
-  apt:
-    state: latest
-    cache_valid_time: "{{apt_cache_delay}}"
-    name:
-      [
-        "build-essential",
-        "git",
-        "wget",
-        "libssl-dev",
-        "libreadline-dev",
-        "libncurses5-dev",
-        "zlib1g-dev",
-        "m4",
-        "curl",
-        "wx-common",
-        "libwxgtk3.0-dev",
-        "autoconf",
-      ]
-
 - name: Install asdf
-  become: yes
-  become_user: "{{username}}"
-  git:
-    repo: "https://github.com/asdf-vm/asdf.git"
-    dest: "~{{username}}/.asdf"
-    version: v0.7.8
+  homebrew:
+    state: latest
+    name: asdf
 
 - name: Install asdf Erlang plugin
-  become: yes
-  become_user: "{{username}}"
-  command: ~{{username}}/.asdf/bin/asdf plugin add erlang
+  command: "asdf plugin add erlang"
   args:
     creates: ~{{username}}/.asdf/plugins/erlang
 
 - name: Install asdf Elixir plugin
-  become: yes
-  become_user: "{{username}}"
-  command: ~{{username}}/.asdf/bin/asdf plugin add elixir
+  command: "asdf plugin add elixir"
   args:
     creates: ~{{username}}/.asdf/plugins/elixir
 
 - name: Install Erlang {{erlang_version}}
-  become: yes
-  become_user: "{{username}}"
-  command: ~{{username}}/.asdf/bin/asdf install erlang {{erlang_version}} && ~{{username}}/.asdf/bin/asdf global erlang {{erlang_version}}
+  command: "asdf install erlang {{erlang_version}} && asdf global erlang {{erlang_version}}"
   args:
     creates: ~{{username}}/.asdf/installs/erlang/{{erlang_version}}
 
 - name: Install Elixir {{elixir_version}}
-  become: yes
-  become_user: "{{username}}"
-  command: ~{{username}}/.asdf/bin/asdf install elixir {{elixir_version}} && ~{{username}}/.asdf/bin/asdf global elixir {{elixir_version}}
+  command: "asdf install elixir {{elixir_version}} && asdf global elixir {{elixir_version}}"
   args:
     creates: ~{{username}}/.asdf/installs/elixir/{{elixir_version}}
 
 - name: asdf reshim
-  become: yes
-  become_user: "{{username}}"
-  command: ~{{username}}/.asdf/bin/asdf reshim
+  command: "asdf reshim"

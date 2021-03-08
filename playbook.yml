@@ -1,22 +1,30 @@
 ---
 - hosts: "{{host}}"
-  remote_user: root
+  remote_user: "{{default_remote_username}}"
   vars_files:
     - variables/all.yml
+    - variables/become_pass.yml
+  tasks:
+    - name: Create new privileged user
+      include_tasks: tasks/user.yml
 
+- hosts: "{{host}}"
+  remote_user: "{{username}}"
+  vars_files:
+    - variables/all.yml
+  environment:
+    PATH: "{{ ansible_env.PATH }}:{{brew_path}}/bin"
   tasks:
     - name: Run {{task_file}} tasks
       include_tasks: tasks/{{task_file}}
       loop:
-        - user.yml
-        - nginx.yml
-        - code_server.yml
-        - docker.yml
-        - postgresql.yml
-        - elixir.yml
+        # - homebrew.yml
+        # - shell.yml
+        # - nginx.yml
+        # - postgresql.yml
+        # - elixir.yml
         - js.yml
-        - shell.yml
-        - chromedriver.yml
-        - project.yml
+        - code.yml
+        # - code_server.yml
       loop_control:
         loop_var: task_file

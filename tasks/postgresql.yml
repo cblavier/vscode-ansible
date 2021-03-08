@@ -1,33 +1,26 @@
-- name: Run Postgres with docker-compose
-  docker_compose:
-    project_name: postgresql
-    definition:
-      version: "3"
-      services:
-        postgresql:
-          container_name: "{{postgres_container_name}}"
-          image: postgis/postgis:12-3.0-alpine
-          ports:
-            - "5432:5432"
-          volumes:
-            - "{{postgres_data_path}}:/var/lib/postgresql/data"
-          environment:
-            - POSTGRES_USER={{postgres_user}}
-            - POSTGRES_HOST_AUTH_METHOD={{postgres_host_auth_method}}
-            - POSTGRES_PASSWORD={{postgres_password}}
-          restart: always
-
-- name: Add Postgres apt Key
-  apt_key:
-    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
-    state: present
-
-- name: APT repo for postgres
-  apt_repository:
-    repo: deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main
-
-- name: Install postgresql-client
-  apt:
+- name: Install PostgresQL
+  homebrew:
     state: latest
-    cache_valid_time: "{{apt_cache_delay}}"
-    name: "postgresql-client-12"
+    name: ["postgresql"]
+
+- name: Copy postgresql launchctl script
+  become: yes
+  template:
+    src: templates/launchctl/homebrew.mxcl.postgresql.plist.j2
+    dest: /Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+    mode: "644"
+
+- name: chmod postgres data dir
+  become: yes
+  file:
+    path: "{{brew_path}}/var/postgres"
+    recurse: yes
+    owner: "{{username}}"
+    group: admin
+    mode: "0750"
+
+- name: Load postgres service
+  become: yes
+  community.general.launchd:
+    name: homebrew.mxcl.postgresql
+    state: started
